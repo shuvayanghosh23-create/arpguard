@@ -1,0 +1,42 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+dist/
+build/
+
+# --- Virtual environments ---
+.venv/
+venv/
+ENV/
+env/
+
+# --- OS / Editor junk ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# --- Logs / runtime artifacts (IMPORTANT: often sensitive) ---
+*.log
+*.jsonl
+logs/
+arpguard.log
+arpguard.jsonl
+
+# --- Secrets / env files (IMPORTANT) ---
+.env
+.env.*
+*.key
+*.pem
+
+# --- Network captures (IMPORTANT) ---
+*.pcap
+*.pcapng
+
+# --- Temporary files ---
+*.tmp
+*.swp

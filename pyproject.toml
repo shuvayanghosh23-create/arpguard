@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "arpguard"
+version = "0.1.0"
+description = "ARP spoofing detection tool (Linux-first CLI)"
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+  "scapy>=2.5.0"
+]
+
+[project.scripts]
+arpguard = "arpguard.cli:run"
