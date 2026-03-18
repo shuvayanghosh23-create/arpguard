@@ -1,4 +1,4 @@
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass, field, asdict
 from typing import List, Optional
 import time
 
@@ -26,6 +26,6 @@ class AlertEvent:
     baseline_mac: Optional[str] = None
     observed_macs: Optional[List[str]] = None
     current_mac: Optional[str] = None
-    ts: float = time.time()
+    ts: float = field(default_factory=time.time)
     def to_dict(self):
         return asdict(self)
