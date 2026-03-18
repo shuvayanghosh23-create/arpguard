@@ -21,20 +21,23 @@ class DualLogger:
                 f.write(f"{self._ts()} {line}\n")
 
     def log_event(self, event: AlertEvent):
-        if self.text_path:
-            macs = ", ".join(event.observed_macs or [])
-            line = f"[{event.level}] {event.category} {event.message}"
-            if event.target_ip:
-                line += f" ip={event.target_ip}"
-            if event.baseline_mac:
-                line += f" baseline={event.baseline_mac}"
-            if event.current_mac:
-                line += f" current={event.current_mac}"
-            if macs:
-                line += f" observed=[{macs}]"
-            self.log_text(line)
-
-        if self.json_path:
-            with self._lock:
+        if not self.text_path and not self.json_path:
+            return
+        macs = ", ".join(event.observed_macs or [])
+        line = f"[{event.level}] {event.category} {event.message}"
+        if event.target_ip:
+            line += f" ip={event.target_ip}"
+        if event.baseline_mac:
+            line += f" baseline={event.baseline_mac}"
+        if event.current_mac:
+            line += f" current={event.current_mac}"
+        if macs:
+            line += f" observed=[{macs}]"
+        ts = self._ts()
+        with self._lock:
+            if self.text_path:
+                with open(self.text_path, "a", encoding="utf-8") as f:
+                    f.write(f"{ts} {line}\n")
+            if self.json_path:
                 with open(self.json_path, "a", encoding="utf-8") as f:
                     f.write(json.dumps(event.to_dict(), ensure_ascii=False) + "\n")

@@ -73,8 +73,14 @@ def run():
 
     detector = Detector(cfg=cfg, iface=iface, gateway_ip=gateway, logger=logger)
 
-    # Start sniffer (daemon so program exits cleanly on Ctrl+C)
-    t_sniff = threading.Thread(target=start_arp_sniffer, args=(iface, detector.on_packet), daemon=True)
+    # Start sniffer (daemon so program exits cleanly on Ctrl+C).
+    # Use a callable so the sniffer always picks up the latest iface after a
+    # network change without needing to restart the thread.
+    t_sniff = threading.Thread(
+        target=start_arp_sniffer,
+        args=(lambda: detector.iface, detector.on_packet),
+        daemon=True,
+    )
     t_sniff.start()
 
     # ---- Baseline helper: retry until baseline is established (or ALERT happens) ----
