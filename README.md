@@ -29,7 +29,7 @@ It combines:
 
 ## Installation
 
-From the repository root (`/home/runner/work/arpguard/arpguard`):
+From the repository root:
 
 ```bash
 python3 -m pip install .
